@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--mysql 连接数据库jar 这里选择自己本地位置-->
+    <!--/devsoft/repo/mysql/mysql-connector-java/6.0.6/mysql-connector-java-6.0.6.jar-->
+    <!--<classPathEntry location="./mysql-connector-java-6.0.6.jar" />-->
+    <!--<classPathEntry  location="/devsoft/repo/mysql/mysql-connector-java/6.0.6/mysql-connector-java-6.0.6.jar"/>-->
+    <context id="testTables" defaultModelType="hierarchical" targetRuntime="MyBatis3" >
+        <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表；
+        一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖
+     -->
+        <property name="autoDelimitKeywords" value="false"/>
+        <property name="useActualColumnNames" value="true" />
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <!-- 覆盖xml文件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.OverwriteXmlPlugin" />
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+        <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin" />
+
+
+        <!-- 数据Model属性对应Column获取插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
+
+        <!-- 存在即更新插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.UpsertPlugin"/>
+
+        <plugin type="com.itfsw.mybatis.generator.plugins.SumSelectivePlugin"/>
+
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$" />
+            <property name="replaceString" value="Criteria" />
+        </plugin>
+
+        <!-- 逻辑删除插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.LogicalDeletePlugin">
+            <!-- 这里配置的是全局逻辑删除列和逻辑删除值，当然在table中配置的值会覆盖该全局配置 -->
+            <!-- 逻辑删除列类型只能为数字、字符串或者布尔类型 -->
+            <property name="logicalDeleteColumn" value="DELETED"/>
+            <!-- 逻辑删除-已删除值 -->
+            <property name="logicalDeleteValue" value="1"/>
+            <!-- 逻辑删除-未删除值 -->
+            <property name="logicalUnDeleteValue" value="0"/>
+            <!-- 逻辑删除常量名称，不配置默认为 IS_DELETED -->
+            <property name="logicalDeleteConstName" value="IS_DELETED"/>
+            <!-- 逻辑删除常量（未删除）名称，不配置默认为 NOT_DELETED -->
+            <property name="logicalUnDeleteConstName" value="NOT_DELETED"/>
+        </plugin>
+
+        <!-- Example Criteria 增强插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleEnhancedPlugin"/>
+
+        <!-- 数据ModelCloneable插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ModelCloneablePlugin"/>
+
+        <!-- MySQL分页插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.LimitPlugin"/>
+
+
+        <plugin type="com.itfsw.mybatis.generator.plugins.BatchInsertPlugin"/>
+
+        <!-- Lombok插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.LombokPlugin">
+            <!-- @Builder 必须在 Lombok 版本 >= 1.18.2 的情况下 -->
+            <property name="@Builder" value="false"/>
+            <!-- @NoArgsConstructor 和 @AllArgsConstructor 使用规则和Lombok一致 -->
+            <property name="@AllArgsConstructor" value="false"/>
+            <property name="@NoArgsConstructor" value="false"/>
+        </plugin>
+
+        <!-- 查询单条数据插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.SelectOneByExamplePlugin"/>
+
+        <plugin type="com.itfsw.mybatis.generator.plugins.CommentPlugin">
+            <!-- 自定义模板路径 -->
+            <property name="template" value="src/test/resources/mybatis-generator-comment.ftl" />
+        </plugin>
+
+
+        <!-- 为了防止生成的代码中有很多注释，比较难看，加入下面的配置控制 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+            <property name="suppressDate" value="true" />
+        </commentGenerator>
+
+
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://10.170.1.44:3306/seventeen?serverTimezone=UTC&amp;nullNamePatternMatchesAll=true&amp;useSSL=true"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+           NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true" />
+        </javaTypeResolver>
+
+        <!-- targetProject:生成PO类的位置 -->
+        <javaModelGenerator targetPackage="com.marketing.seventeen.entity"
+                            targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true" />
+
+        </javaModelGenerator>
+        <!-- targetProject:mapper映射文件生成的位置
+           如果maven工程只是单独的一个工程，targetProject="src/main/java"
+           若果maven工程是分模块的工程，targetProject="所属模块的名称"，例如：
+           targetProject="ecps-manager-mapper"，下同-->
+        <sqlMapGenerator targetPackage="mybatis.mapper"
+                         targetProject="src/main/resources">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!-- targetPackage：mapper接口生成的位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.marketing.seventeen.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+        <!-- 指定数据库表 -->
+
+        <!---->
+        <table schema="seventeen" tableName="activity_info" domainObjectName="ActivityInfo">
+        </table>
+        <table schema="seventeen" tableName="activity_info_arr" domainObjectName="ActivityInfoArr">
+        </table>
+        <table schema="seventeen" tableName="activity_template_arr" domainObjectName="ActivityTemplateArr">
+        </table>
+        <table schema="seventeen" tableName="activity_templates" domainObjectName="ActivityTemplates">
+        </table>
+        <table schema="seventeen" tableName="boss_user" domainObjectName="BossUser">
+        </table>
+        <table schema="seventeen" tableName="help_log" domainObjectName="HelpLog">
+            <property name="incrementsColumns" value="help_value"/>
+            <columnOverride column="help_user_phone" typeHandler="com.marketing.seventeen.typehandler.AesTypeHandler"/>
+            <columnOverride column="help_nick_name" typeHandler="com.marketing.seventeen.typehandler.AesTypeHandler"/>
+        </table>
+        <table schema="seventeen" tableName="join_in" domainObjectName="JoinIn">
+            <columnOverride column="nick_name" typeHandler="com.marketing.seventeen.typehandler.AesTypeHandler"/>
+            <columnOverride column="join_phone" typeHandler="com.marketing.seventeen.typehandler.AesTypeHandler"/>
+        </table>
+        <table schema="seventeen" tableName="join_in_extend" domainObjectName="JoinInExtend">
+        </table>
+        <table schema="seventeen" tableName="project_info" domainObjectName="ProjectInfo">
+        </table>
+        <table schema="seventeen" tableName="user_info" domainObjectName="UserInfo">
+        </table>
+        <table schema="seventeen" tableName="award_info" domainObjectName="AwardInfo">
+        </table>
+        <table schema="seventeen" tableName="wechat_auth_log" domainObjectName="WechatAuthLog">
+            <columnOverride column="nick_Name" typeHandler="com.marketing.seventeen.typehandler.AesTypeHandler"/>
+        </table>
+
+        <table schema="seventeen" tableName="vip_user_info" domainObjectName="VipUserInfo">
+        </table>
+        <table schema="seventeen" tableName="activity_card_info" domainObjectName="ActivityCardInfo">
+        </table>
+        <table schema="seventeen" tableName="estate_info" domainObjectName="EstateInfo">
+        </table>
+        <table schema="seventeen" tableName="draw_activity_info" domainObjectName="DrawActivityInfo">
+        </table>
+        <table schema="seventeen" tableName="draw_user_info" domainObjectName="DrawUserInfo">
+        </table>
+
+        <table schema="seventeen" tableName="helpnums_view" domainObjectName="HelpnumsList">
+            <columnOverride column="c_nickname" typeHandler="com.marketing.seventeen.typehandler.AesTypeHandler"/>
+        </table>
+
+        <table schema="seventeen" tableName="order_log" domainObjectName="OrderLog">
+        </table>
+
+        <table schema="seventeen" tableName="seller_estate_info" domainObjectName="SellerEstateInfo">
+        </table>
+
+        <table schema="seventeen" tableName="seller_broker_info" domainObjectName="SellerBroker">
+        </table>
+
+        <table schema="seventeen" tableName="order_approval" domainObjectName="OrderApproval">
+        </table>
+    </context>
+</generatorConfiguration>
