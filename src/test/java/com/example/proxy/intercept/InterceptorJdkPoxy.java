@@ -33,7 +33,7 @@ public class InterceptorJdkPoxy implements InvocationHandler {
         //调用前置方法
         if(interceptor.before(proxy,target,method,args)){
             //反射原有方法
-            method.invoke(target,args);
+            result=method.invoke(target,args);
         }else{
             //调用around方法
             interceptor.around(proxy,target,method,args);
