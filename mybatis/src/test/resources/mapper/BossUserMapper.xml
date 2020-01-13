@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatis.mapper.BossUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.mybatis.model.BossUser">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="user_type" jdbcType="VARCHAR" property="userType"/>
+    </resultMap>
+
+
+
+    <select id="getBossUser" resultMap="BaseResultMap" parameterType="string">
+        select id,userName,user_type from boss_user
+        where id=#{id}
+    </select>
+</mapper>

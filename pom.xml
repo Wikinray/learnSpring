@@ -36,6 +36,10 @@
 			</exclusions>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
 
 
 		<dependency>
@@ -48,6 +52,13 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.62</version>
+        </dependency>
 	</dependencies>
 
 	<build>
@@ -95,5 +106,6 @@
         <module>springaop</module>
 		<module>design</module>
 		<module>springjpa</module>
+		<module>mybatis</module>
     </modules>
 </project>
