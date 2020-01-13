@@ -105,5 +105,6 @@
     <modules>
         <module>springaop</module>
 		<module>design</module>
+		<module>springjpa</module>
     </modules>
 </project>

@@ -8,11 +8,11 @@
         <version>1.0.0-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-
-    <artifactId>design</artifactId>
+    <groupId>com.example</groupId>
+    <artifactId>springjpa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>design</name>
-    <description>design pattern</description>
+    <name>springjpa</name>
+    <description>spring jpa</description>
 
     <properties>
         <java.version>1.8</java.version>
