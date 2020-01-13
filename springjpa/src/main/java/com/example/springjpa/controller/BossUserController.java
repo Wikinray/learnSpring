@@ -1,7 +1,8 @@
 package com.example.springjpa.controller;
 
-import example.Mapper.BossUserMapper;
-import example.entity.BossUser;
+
+import com.example.springjpa.Mapper.BossUserMapper;
+import com.example.springjpa.entity.BossUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
