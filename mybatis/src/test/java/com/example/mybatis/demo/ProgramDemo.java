@@ -1,6 +1,8 @@
 package com.example.mybatis.demo;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.mybatis.mapper.BossUserMapper;
+import com.example.mybatis.mapper.BossUserMapper2;
 import com.example.mybatis.model.BossUser;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.mapping.Environment;
@@ -36,7 +38,7 @@ public class ProgramDemo {
             configuration.setEnvironment(environment);
 
             configuration.getTypeAliasRegistry().registerAlias("bossUser", BossUser.class);
-            configuration.addMapper(BossUserMapper.class);
+            configuration.addMapper(BossUserMapper2.class);
 
             SqlSessionFactoryBuilder builder=new SqlSessionFactoryBuilder();
             sqlSessionFactory=builder.build(configuration);
@@ -51,11 +53,15 @@ public class ProgramDemo {
 
         SqlSession sqlSession=null;
         try {
+            sqlSessionFactory=getSqlSessionFactory();
             //打开会话
             sqlSession=sqlSessionFactory.openSession();
             /**
              * do something
              */
+            BossUser bossUser=(BossUser)sqlSession.selectOne("com.example.mybatis.mapper.BossUserMapper2.getBossUser2","20190927C06627184133176557568");
+            //BossUser bossUser=(BossUser)sqlSession.selectOne("getBossUser2","1");
+            System.out.println("结果："+ JSONObject.toJSONString(bossUser));
             //提交事务
             sqlSession.commit();
         }catch (Exception e){
@@ -72,6 +78,7 @@ public class ProgramDemo {
     }
 
     public static void main(String[] args){
-
+        ProgramDemo programDemo=new ProgramDemo();
+        programDemo.selectOnly();
     }
 }

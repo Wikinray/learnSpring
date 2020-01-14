@@ -38,8 +38,8 @@ public class XmlDemo {
             /**
              * do something
              */
-            BossUser bossUser=(BossUser)sqlSession.selectOne("com.example.mybatis.mapper.BossUserMapper.getBossUser","20190927C06627184133176557568");
-            //BossUser bossUser=(BossUser)sqlSession.selectOne("getBossUser","1");
+            //BossUser bossUser=(BossUser)sqlSession.selectOne("com.example.mybatis.mapper.BossUserMapper.getBossUser","20190927C06627184133176557568");
+            BossUser bossUser=(BossUser)sqlSession.selectOne("getBossUser","1");
             System.out.println("结果："+ JSONObject.toJSONString(bossUser));
 
             sqlSession.commit();
