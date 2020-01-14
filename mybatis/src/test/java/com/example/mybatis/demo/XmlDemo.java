@@ -6,17 +6,18 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.session.SqlSessionManager;
 
 import java.io.InputStream;
 
 public class XmlDemo {
 
-    SqlSessionFactory sqlSessionFactory=null;
     String resource="mybatis-config.xml";
     InputStream inputStream;
 
 
     private SqlSessionFactory getSqlSessionFactory(){
+        SqlSessionFactory sqlSessionFactory=null;
         try {
             inputStream= Resources.getResourceAsStream(resource);
             SqlSessionFactoryBuilder builder=new SqlSessionFactoryBuilder();
@@ -27,13 +28,22 @@ public class XmlDemo {
         return sqlSessionFactory;
     }
 
+    private SqlSessionFactory getSqlSessionFactory2(){
+        SqlSessionFactory sqlSessionFactory=null;
+        try {
+            inputStream= Resources.getResourceAsStream(resource);
+            sqlSessionFactory= SqlSessionManager.newInstance(inputStream);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return sqlSessionFactory;
+    }
 
-    private void selectOnly(){
+
+    private void selectOnly(SqlSessionFactory sqlSessionFactory){
 
         SqlSession sqlSession=null;
         try {
-            sqlSessionFactory=getSqlSessionFactory();
-
             sqlSession=sqlSessionFactory.openSession();
             /**
              * do something
@@ -55,8 +65,10 @@ public class XmlDemo {
     }
 
 
+
     public static void main(String[] args){
         XmlDemo xmlDemo=new XmlDemo();
-        xmlDemo.selectOnly();
+        SqlSessionFactory sqlSessionFactory=xmlDemo.getSqlSessionFactory2();
+        xmlDemo.selectOnly(sqlSessionFactory);
     }
 }
