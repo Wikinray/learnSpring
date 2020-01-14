@@ -6,19 +6,14 @@ import com.example.mybatis.mapper.BossUserMapper2;
 import com.example.mybatis.model.BossUser;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.session.*;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 public class ProgramDemo {
-    SqlSessionFactory sqlSessionFactory=null;
-
-
 
     private SqlSessionFactory getSqlSessionFactory(){
+        SqlSessionFactory sqlSessionFactory=null;
         try {
             //数据库连接池信息
             PooledDataSource dataSource=new PooledDataSource();
@@ -48,8 +43,18 @@ public class ProgramDemo {
         return sqlSessionFactory;
     }
 
+    private SqlSessionFactory getSqlSessionFactory2(){
+        SqlSessionFactory sqlSessionFactory=null;
+        try {
+            sqlSessionFactory= SqlSessionManager.newInstance(getSqlSessionFactory());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return sqlSessionFactory;
+    }
 
-    private void selectOnly(){
+
+    private void selectOnly(SqlSessionFactory sqlSessionFactory){
 
         SqlSession sqlSession=null;
         try {
@@ -79,6 +84,8 @@ public class ProgramDemo {
 
     public static void main(String[] args){
         ProgramDemo programDemo=new ProgramDemo();
-        programDemo.selectOnly();
+        //SqlSessionFactory sqlSessionFactory=programDemo.getSqlSessionFactory();
+        SqlSessionFactory sqlSessionFactory=programDemo.getSqlSessionFactory2();
+        programDemo.selectOnly(sqlSessionFactory);
     }
 }

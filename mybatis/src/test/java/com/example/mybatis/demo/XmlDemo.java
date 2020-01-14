@@ -11,13 +11,10 @@ import org.apache.ibatis.session.SqlSessionManager;
 import java.io.InputStream;
 
 public class XmlDemo {
-
-    String resource="mybatis-config.xml";
-    InputStream inputStream;
-
-
     private SqlSessionFactory getSqlSessionFactory(){
         SqlSessionFactory sqlSessionFactory=null;
+        String resource="mybatis-config.xml";
+        InputStream inputStream;
         try {
             inputStream= Resources.getResourceAsStream(resource);
             SqlSessionFactoryBuilder builder=new SqlSessionFactoryBuilder();
@@ -30,6 +27,8 @@ public class XmlDemo {
 
     private SqlSessionFactory getSqlSessionFactory2(){
         SqlSessionFactory sqlSessionFactory=null;
+        String resource="mybatis-config.xml";
+        InputStream inputStream;
         try {
             inputStream= Resources.getResourceAsStream(resource);
             sqlSessionFactory= SqlSessionManager.newInstance(inputStream);
@@ -68,7 +67,8 @@ public class XmlDemo {
 
     public static void main(String[] args){
         XmlDemo xmlDemo=new XmlDemo();
-        SqlSessionFactory sqlSessionFactory=xmlDemo.getSqlSessionFactory2();
+        SqlSessionFactory sqlSessionFactory=xmlDemo.getSqlSessionFactory();
+        //SqlSessionFactory sqlSessionFactory=xmlDemo.getSqlSessionFactory2();
         xmlDemo.selectOnly(sqlSessionFactory);
     }
 }

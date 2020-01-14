@@ -2,6 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口全限定名 -->
 <mapper namespace="com.example.mybatis.mapper.BossUserMapper">
 
     <resultMap id="BaseResultMap" type="com.example.mybatis.model.BossUser">
@@ -13,7 +14,7 @@
 
 
     <select id="getBossUser" resultMap="BaseResultMap" parameterType="string">
-        select id,userName,user_type from boss_user
+        select id,userName,user_type as  from boss_user
         where id=#{id}
     </select>
 </mapper>
