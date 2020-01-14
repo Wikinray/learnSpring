@@ -11,8 +11,13 @@ import org.apache.ibatis.session.SqlSessionManager;
 import java.io.InputStream;
 
 public class XmlDemo {
+
+    static SqlSessionFactory sqlSessionFactory=null;
+
     private SqlSessionFactory getSqlSessionFactory(){
-        SqlSessionFactory sqlSessionFactory=null;
+        if(null!=sqlSessionFactory){
+            return sqlSessionFactory;
+        }
         String resource="mybatis-config.xml";
         InputStream inputStream;
         try {

@@ -67,6 +67,11 @@ public class ProgramDemo {
             BossUser bossUser=(BossUser)sqlSession.selectOne("com.example.mybatis.mapper.BossUserMapper2.getBossUser2","20190927C06627184133176557568");
             //BossUser bossUser=(BossUser)sqlSession.selectOne("getBossUser2","1");
             System.out.println("结果："+ JSONObject.toJSONString(bossUser));
+
+            BossUserMapper2 mapper2=sqlSession.getMapper(BossUserMapper2.class);
+            BossUser bossUser2=mapper2.getBossUser2("20190927C06627184133176557568");
+
+            System.out.println("结果2："+ JSONObject.toJSONString(bossUser2));
             //提交事务
             sqlSession.commit();
         }catch (Exception e){

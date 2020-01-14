@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- model定义别名 -->
+    <typeAliases>
+        <typeAlias type="com.example.mybatis.model.BossUser" alias="bossUser" />
+    </typeAliases>
+
+    <!--配置数据库环境-->
+    <environments default="development">
+        <environment id="development">
+            <!--事务管理器-->
+            <transactionManager type="JDBC" />
+            <!--数据库连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://192.168.1.164:3306/seventeen"/>
+                <property name="username" value="jindi"/>
+                <property name="password" value="jindi"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--映射配置-->
+    <mappers>
+        <mapper resource="mapper/BossUserMapper.xml" />
+
+        <!--配置 注解方式mapper-->
+        <!--<mapper class="com.example.mybatis.mapper.BossUserMapper2" />-->
+    </mappers>
+</configuration>
