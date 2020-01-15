@@ -32,3 +32,36 @@ loglmpl|指定 MyBatis 所用日志的具体实现，未指定时将自动查找
 proxyFactory|指定 MyBatis 创建具有延迟加载能力的对象所用到的代理工具|CGLIB/JAVASSIST|JAVASSIST|
 vfslmpl|指定 VFS 的实现类|提供 VFS 类的全限定名，如果存在多个，可以使用逗号分隔|Not set|
 useActualParamName|允许用方法参数中声明的实际名称引用参数．要使用此功能，项目必须被编译为 Java S 参数的选择|true/false|true|
+
+## typeAliases别名
+#### 系统别名
+别名|Java类型|是否支持数组|
+---|---|---|
+_byte|byte|是|
+_long|long|是|
+_short|short|是|
+_int|int|是|
+_integer|integer|是|
+_double|double|是|
+_float|float|是|
+_boolean|boolean|是|
+string|String|是|
+byte|Byte|是|
+long|Long|是|
+short|Short|是|
+int|Integer|是|
+integer|Integer|是|
+double|Double|是|
+float|Float|是|
+boolean|Boolean|是|
+date|Date|是|
+decimal|BigDecimal|是|
+bigdecimal|BigDecimal|是|
+object|Object|是|
+map|Map|否|
+hashmap|HashMap|否|
+list|List|否|
+arraylist|ArrayList|否|
+collection|Collection|否|
+iterator|Iterator|否|
+ResultSet|ResultSet|否|
