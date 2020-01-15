@@ -5,10 +5,14 @@ import com.example.mybatis.mapper.BossUserMapper;
 import com.example.mybatis.mapper.BossUserMapper2;
 import com.example.mybatis.model.BossUser;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
+import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.*;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+
+import java.io.InputStream;
+import java.util.Properties;
 
 public class ProgramDemo {
 
@@ -37,6 +41,32 @@ public class ProgramDemo {
 
             SqlSessionFactoryBuilder builder=new SqlSessionFactoryBuilder();
             sqlSessionFactory=builder.build(configuration);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return sqlSessionFactory;
+    }
+
+    private SqlSessionFactory getSqlSessionFactory3(){
+        SqlSessionFactory sqlSessionFactory=null;
+        try {
+            InputStream proInputStream =Resources.getResourceAsStream("jdbc.properties");
+
+            Properties properties=new Properties();
+            properties.load(proInputStream);
+            String userName=properties.getProperty("database.username");
+            String password=properties.getProperty("database.password");
+            /**
+             * 处理userName password  进行解密
+             */
+            properties.setProperty("database.username",userName);
+            properties.setProperty("database.password",password);
+
+
+            InputStream inputStream=Resources.getResourceAsStream("mybatis-config.xml");
+
+            SqlSessionFactoryBuilder builder=new SqlSessionFactoryBuilder();
+            sqlSessionFactory=builder.build(inputStream,properties);
         }catch (Exception e){
             e.printStackTrace();
         }
