@@ -65,3 +65,11 @@ arraylist|ArrayList|否|
 collection|Collection|否|
 iterator|Iterator|否|
 ResultSet|ResultSet|否|
+
+## typeHandler类型转换器
+
+#### jdbcType
+定义数据库类型
+
+#### javaType
+定义java类型

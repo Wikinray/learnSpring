@@ -8,30 +8,31 @@
     <resultMap id="BaseResultMap" type="com.example.mybatis.model.BossUser">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
-        <result column="user_type" jdbcType="VARCHAR" property="userType"/>
+        <result column="user_type"  property="userType" typeHandler="com.example.mybatis.utils.UserEnumTypeHandler"/>
+        <result column="password"  property="password" typeHandler="com.example.mybatis.utils.MytypeHandler"/>
     </resultMap>
 
 
 
     <select id="getBossUser" resultMap="BaseResultMap" parameterType="string">
-        select id,userName,user_type   from boss_user
+        select id,userName,user_type,password   from boss_user
         where id=#{id}
     </select>
 
     <insert id="insertBossUser" parameterType="bossUser" >
-        insert boss_user (id,userName,user_type) values (#{id},#{username},#{userType})
-    </insert>
+        insert boss_user (id,userName,user_type,password) values (#{id},#{username},#{userType,typeHandler=com.example.mybatis.utils.UserEnumTypeHandler},#{password,typeHandler=com.example.mybatis.utils.MytypeHandler})
+     </insert>
 
-    <delete id="deleteBossUser" parameterType="string" >
-        delete boss_user where id=#{id}
-    </delete>
+     <delete id="deleteBossUser" parameterType="string" >
+         delete boss_user where id=#{id}
+     </delete>
 
-    <update id="updateBossUser" parameterType="bossUser" >
-        update boss_user set userName=#{userName},user_type=#{userType}
-        values (#{id},#{username},#{userType})
-    </update>
+     <update id="updateBossUser" parameterType="bossUser" >
+         update boss_user set userName=#{userName},user_type=#{userType},password=#{password}
+         values (#{id},#{username},#{userType})
+     </update>
 
-    <select id="listBossUser" resultMap="BaseResultMap" parameterType="string">
-        select id,userName,user_type as  from boss_userwhere user_type=#{userType}
-    </select>
-</mapper>
+     <select id="listBossUser" resultMap="BaseResultMap" parameterType="string">
+         select id,userName,user_type as  from boss_userwhere where user_type=#{userType}
+     </select>
+ </mapper>

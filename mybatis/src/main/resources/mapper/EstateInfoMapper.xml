@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口全限定名 -->
+<mapper namespace="com.example.mybatis.mapper.EstateInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.mybatis.model.EstateInfo">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="city"  property="city" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+        <result column="estate_name" jdbcType="VARCHAR" property="estateName"/>
+        <result column="logo_img"  property="logoImg" jdbcType="VARCHAR" />
+        <result column="vip_logo_img"  property="vipLogoImg" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+
+    <select id="getEstateInfo" resultMap="BaseResultMap" parameterType="string">
+        select id,city,estate_name,logo_img,vip_logo_img   from estate_info
+        where id=#{id}
+    </select>
+
+    <insert id="insertEstateInfo" parameterType="estateInfo" >
+        insert estate_info (id,city,estate_name,logo_img,vip_logo_img) values (#{id},#{city,typeHandler=org.apache.ibatis.type.EnumTypeHandler},#{estateName},#{logoImg},#{vipLogoImg})
+        <!--insert estate_info (id,city,estate_name,logo_img,vip_logo_img) values (#{id},#{city},#{estateName},#{logoImg},#{vipLogoImg})-->
+    </insert>
+
+</mapper>

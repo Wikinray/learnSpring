@@ -34,13 +34,20 @@
     </settings>
 
 
-    <!-- 类型命名 -->
+    <!-- 类型命名 方法一（非扫描）-->
     <typeAliases>
         <typeAlias alias="bossUser" type="com.example.mybatis.model.BossUser"  />
     </typeAliases>
 
+    <!-- 类型命名 方法二（扫描）-->
+    <!--<typeAliases>
+        <package name="com.example.mybatis.model"  />
+    </typeAliases>-->
+
     <!-- 类型处理器 -->
-    <typeHandlers />
+    <typeHandlers >
+        <typeHandler jdbcType="VARCHAR" javaType="string" handler="com.example.mybatis.utils.MytypeHandler"/>
+    </typeHandlers>
 
     <!-- 对象工厂 -->
     <objectFactory type="" />

@@ -6,6 +6,8 @@
     <!-- model定义别名 -->
     <typeAliases>
         <typeAlias type="com.example.mybatis.model.BossUser" alias="bossUser" />
+        <typeAlias type="com.example.mybatis.model.EstateInfo" alias="estateInfo" />
+        <typeAlias type="com.example.mybatis.model.WechatAuthLog" alias="wechatAuthLog" />
     </typeAliases>
 
     <!--配置数据库环境-->
@@ -26,6 +28,8 @@
     <!--映射配置-->
     <mappers>
         <mapper resource="mapper/BossUserMapper.xml" />
+        <mapper resource="mapper/EstateInfoMapper.xml" />
+        <mapper resource="mapper/WechatAuthLogMapper.xml" />
 
         <!--配置 注解方式mapper-->
         <!--<mapper class="com.example.mybatis.mapper.BossUserMapper2" />-->

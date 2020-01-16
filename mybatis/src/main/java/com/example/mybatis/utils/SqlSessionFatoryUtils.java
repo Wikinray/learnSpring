@@ -42,13 +42,4 @@ public class SqlSessionFatoryUtils {
         }
         return sqlSessionFactory.openSession();
     }
-
-
-    public static void main(String[] args){
-        SqlSession sqlSession= SqlSessionFatoryUtils.openSession();
-        BossUserMapper mapper=sqlSession.getMapper(BossUserMapper.class);
-        BossUser bossUser=mapper.getBossUser("1");
-
-        System.out.println(JSONObject.toJSONString(bossUser));
-    }
 }
