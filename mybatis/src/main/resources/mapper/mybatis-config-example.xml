@@ -50,7 +50,9 @@
     </typeHandlers>
 
     <!-- 对象工厂 -->
-    <objectFactory type="" />
+    <objectFactory type="com.example.mybatis.utils.MyObjectFactory" >
+        <property name="prop1" value="value1"/>
+    </objectFactory>
 
     <!--配置数据库环境-->
     <environments default="development">
