@@ -79,7 +79,16 @@
     </environments>
 
     <!--数据库厂商标识-->
-    <databaseIdProvider type="" />
+    <databaseIdProvider type="DB_VENDOR" >
+        <property name="Oracle" value="oracle"/>
+        <property name="MYSQL" value="mysql"/>
+        <property name="DB2" value="db2"/>
+    </databaseIdProvider>
+
+    <!--自定义DatabaseIdProvider
+    <databaseIdProvider type="com.example.mybatis.utils.databaseIdProvider.MyDatabaseIdProvider">
+        <property name="msg" value="自定义DatabaseIdProvider"/>
+    </databaseIdProvider>-->
 
     <!--映射配置-->
     <mappers>

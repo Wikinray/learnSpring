@@ -108,3 +108,35 @@ poolTimeToWait|POOLED|重新获取connection等待时间|20 000毫秒|
 poolPingQuery|POOLED|ping连接是否可用|20 000毫秒|
 poolPingEnable|POOLED|是否启用侦测查询|false|
 poolPingConnectionNotUsedFor|POOLED|侦测查询使用频率|0|
+
+
+## 引入映射器
+
+###### 四种引入方法
+方法一，文件路径引入
+```
+<mappers>
+        <mapper resource="mapper/BossUserMapper.xml" />
+</mappers>
+```
+
+方法二，包名引入
+```
+<mappers>
+       <package name="com.example.mybatis.mapper" />
+</mappers>
+```
+
+方法三，注册类引入
+```
+<mappers>
+       <mapper class="com.example.mybatis.mapper.BossUserMapper2" />
+</mappers>
+```
+
+方法四，xml引入 绝对路径
+```
+<mappers>
+       <mapper class="file:///var/mappers/com/example/mybatis/mapper/BossUserMapper.xml" />
+</mappers>
+```
