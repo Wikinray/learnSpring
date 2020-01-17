@@ -73,3 +73,13 @@ ResultSet|ResultSet|否|
 
 #### javaType
 定义java类型
+
+## environments （运行环境）
+主要配置数据库信息。
+```
+事务管理器
+
+数据源
+```
+
+###### 大多数情况采用spring对数据源和数据库事务进行管理

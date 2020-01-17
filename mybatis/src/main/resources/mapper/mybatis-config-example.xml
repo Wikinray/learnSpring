@@ -57,8 +57,15 @@
     <!--配置数据库环境-->
     <environments default="development">
         <environment id="development">
-            <!--事务管理器-->
+            <!--事务管理器  start-->
+
             <transactionManager type="JDBC" />
+            <!--<transactionManager type="MANAGED" />-->
+
+            <!--自定义 TransactionFactory-->
+            <!--<transactionManager type="com.example.mybatis.utils.Transaction.MyTransactionFactory" />-->
+            <!--事务管理器  end-->
+
             <!--数据库连接池-->
             <dataSource type="POOLED">
                 <property name="driver" value="${database.driver}"/>
