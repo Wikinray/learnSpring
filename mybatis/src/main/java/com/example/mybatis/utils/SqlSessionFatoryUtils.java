@@ -1,10 +1,6 @@
 package com.example.mybatis.utils;
 
-import com.alibaba.fastjson.JSONObject;
-import com.example.mybatis.mapper.BossUserMapper;
-import com.example.mybatis.model.BossUser;
 import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.ognl.ASTSequence;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;

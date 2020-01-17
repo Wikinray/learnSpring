@@ -76,10 +76,35 @@ ResultSet|ResultSet|否|
 
 ## environments （运行环境）
 主要配置数据库信息。
-```
-事务管理器
 
-数据源
-```
-
+#### transaction事务管理器
 ###### 大多数情况采用spring对数据源和数据库事务进行管理
+
+名称|transaction|transactionFactory|功能|
+---|---|---|---|
+JDBC|JdbcTransaction|JdbcTransactionFactory|对数据库的提交和回滚进行操作|
+MANAGED|ManagedTransaction|ManagedTransactionFactory|不对提交和回滚进行操作，把事务交给容器处理<br>默认关闭连接。<br>需设置closeConnection属性为fasle|
+
+
+#### DataSource
+数据源|DataSource|DataSourceFactory|说明|
+---|---|---|---|
+UNPOOLED|UnpooledDataSource|UnpooledDataSourceFactory|非数据连接池方式<br>每次请求都会打开一个新的connection
+POOLED|PooledDataSource|PooledDataSourceFactory|数据库连接池方式<br>
+JNDI|---|JndiDataSourceFactory|---|
+
+##### properties属性
+属性名|数据源|说明|值|
+---|---|---|---|
+driver|UNPOOLED<br>POOLED<| 数据库驱动名|com.mysql.jdbc.Driver(MYSQL)|
+url|UNPOOLED<br>POOLED|driver|jdbc:mysql://10.170.1.44:3306/seventeen|
+username|UNPOOLED<br>POOLED|用户名|root|
+password|UNPOOLED<br>POOLED|密码|root|
+defaultTransaction<br>IsolationLevel|UNPOOLED<br>POOLED|事务隔离级别|---|
+poolMaxinum<br>ActiveConnection|POOLED|在任意时间都存在的活动connection数|10|
+poolMaxinum<br>IdleConnection|POOLED|在任意时间都存在的空闲connection数|5|
+poolMaxinum<br>CheckoutTime|POOLED|强制返回，池中连接被检出的超时时间|20 000毫秒|
+poolTimeToWait|POOLED|重新获取connection等待时间|20 000毫秒|
+poolPingQuery|POOLED|ping连接是否可用|20 000毫秒|
+poolPingEnable|POOLED|是否启用侦测查询|false|
+poolPingConnectionNotUsedFor|POOLED|侦测查询使用频率|0|

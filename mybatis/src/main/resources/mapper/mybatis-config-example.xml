@@ -46,11 +46,11 @@
 
     <!-- 类型处理器 -->
     <typeHandlers >
-        <typeHandler jdbcType="VARCHAR" javaType="string" handler="com.example.mybatis.utils.MytypeHandler"/>
+        <typeHandler jdbcType="VARCHAR" javaType="string" handler="com.example.mybatis.utils.typehandler.MytypeHandler"/>
     </typeHandlers>
 
     <!-- 对象工厂 -->
-    <objectFactory type="com.example.mybatis.utils.MyObjectFactory" >
+    <objectFactory type="com.example.mybatis.utils.objectFactory.MyObjectFactory" >
         <property name="prop1" value="value1"/>
     </objectFactory>
 
@@ -67,6 +67,8 @@
             <!--事务管理器  end-->
 
             <!--数据库连接池-->
+            <!--自定义DataSourceFactory
+            <dataSource type="com.example.mybatis.utils.dataSourceFactory.DbcpDataSourceFactory">-->
             <dataSource type="POOLED">
                 <property name="driver" value="${database.driver}"/>
                 <property name="url" value="${database.url}"/>

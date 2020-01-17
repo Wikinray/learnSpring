@@ -1,4 +1,4 @@
-package com.example.mybatis.utils;
+package com.example.mybatis.utils.typehandler;
 
 import com.example.mybatis.model.enums.UserTypeEnum;
 import org.apache.ibatis.type.JdbcType;

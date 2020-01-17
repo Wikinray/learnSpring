@@ -8,8 +8,8 @@
     <resultMap id="BaseResultMap" type="com.example.mybatis.model.BossUser">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
-        <result column="user_type"  property="userType" typeHandler="com.example.mybatis.utils.UserEnumTypeHandler"/>
-        <result column="password"  property="password" typeHandler="com.example.mybatis.utils.MytypeHandler"/>
+        <result column="user_type"  property="userType" typeHandler="com.example.mybatis.utils.typehandler.UserEnumTypeHandler"/>
+        <result column="password"  property="password" typeHandler="com.example.mybatis.utils.typehandler.MytypeHandler"/>
     </resultMap>
 
 

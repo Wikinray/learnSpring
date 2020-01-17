@@ -1,4 +1,4 @@
-package com.example.mybatis.utils;
+package com.example.mybatis.utils.objectFactory;
 
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 

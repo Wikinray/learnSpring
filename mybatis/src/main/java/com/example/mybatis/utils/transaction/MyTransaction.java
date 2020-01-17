@@ -1,4 +1,4 @@
-package com.example.mybatis.utils.Transaction;
+package com.example.mybatis.utils.transaction;
 
 import org.apache.ibatis.session.TransactionIsolationLevel;
 import org.apache.ibatis.transaction.Transaction;
