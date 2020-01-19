@@ -11,10 +11,33 @@
         <result column="user_type" jdbcType="VARCHAR" property="userType"/>
     </resultMap>
 
+    <sql id="bossUserCols">
+        ${alias}.id,${alias}.userName,${alias}.user_type
+    </sql>
 
+    <sql id="bossUserColsR">
+        id,userName,user_type
+    </sql>
 
     <select id="getBossUser" resultMap="BaseResultMap" parameterType="string">
-        select id,userName,user_type as  from boss_user
+        select <include refid="bossUserCols"/>  from boss_user
         where id=#{id}
     </select>
+
+    <select id="getBossUser2" resultMap="BaseResultMap" parameterType="string">
+        select <include refid="bossUserColsR">
+                    <property name="alias" value="r"/>
+                </include>
+        from boss_user r
+        where id=#{id}
+    </select>
+
+
+    <insert id="insertBossUser"  parameterType="bossUser">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            select if (max(id)=null,1,max(id)+3 ) from boss_user
+        </selectKey>
+        insert into boss_user i<include refid="bossUserCols"/>)  from boss_user
+        values (#{id},#{userName},#{userType})
+    </insert>
 </mapper>

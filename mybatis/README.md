@@ -1,3 +1,4 @@
+# 4、Mybatis配置
 ## MyBatis 使用 properties 的 3 种方式
 ```
 # 优先级别（覆盖原设置属性）
@@ -139,4 +140,227 @@ poolPingConnectionNotUsedFor|POOLED|侦测查询使用频率|0|
 <mappers>
        <mapper class="file:///var/mappers/com/example/mybatis/mapper/BossUserMapper.xml" />
 </mappers>
+```
+
+# 5、映射器 
+###### 映射器的配置元素
+元素名称|描述|备注|
+---|---|---|
+select|查询|可自定义参数，返回结果|
+insert|插入语句|返回整数|
+update|更新语句|返回整数|
+delete|删除语句|返回整数|
+~~parameterMap~~|定义参数映射参数|即将被删除|
+sql|定义一部分sql，供其他引用|可在多个其他sql语句使用|
+resultMap|结果集加载对象|提供映射规则|
+cache|缓存配置||
+cache-ref|缓存配置引用||
+
+## select 元素一一查询语句
+
+元素|说明|备注|
+---|---|---|
+**id**|和命名空间组合唯一|组合不唯一会报错|
+**parameterType**|类全命名<br>别名（内置或自定义）|JavaBean，Map等|
+**resultType**|类全命名<br>内置int等<br> 别名|统计条数设置为int|
+**resultMap**|自定义映射规则|可配置映射规则，级联，typeHandler等|
+**flushCache**|是否清空之前缓存|默认false|
+**useCache**|二级缓存开关|默认true|
+timeout|超时|默认厂商设置|
+fetchSize|获取记录总条数|默认厂商设置|
+statementType|STATEMENT<br>PREPARED<br>CALLABLE|默认PREPARED|
+resultSetType|FORWARD_ONLY(游标允许向前)<br>SCROLL_SENSITIVE(双向滚动,不及时更新)<br>SCROLL_INSENSITIVE(双向滚动,及时更新)|默认厂商设置|
+databaseId|厂商标识||
+resultOrdered|是否启用嵌套结果|默认false|
+resultSets|多结果集|很少用|
+
+#### 4种传递多个参数的方法
+```
+1、map传递参数，key和value都需明确，增加业务复杂性
+2、@Param注解传递多个参数，参数过多不推荐
+3、javaBean方式  参数多使用（后台数据多条件筛选）
+4、混合模式，明确参数合理性（分页场景）
+```
+
+#### resultMap映射结果集
+复制映射，typeHandler，级联等。
+
+#### 分页参数RowBounds
+小数量查询使用，大数据量需用分页插件
+
+## insert 元素一一插入语句
+元素|说明|备注|
+---|---|---|
+**id**|和命名空间组合唯一|组合不唯一会报错|
+**parameterType**|类全命名<br>别名（内置或自定义）|JavaBean，Map等|
+**flushCache**|是否清空之前缓存|默认false|
+timeout|超时|默认厂商设置|
+statementType|STATEMENT<br>PREPARED<br>CALLABLE|默认PREPARED|
+**useGeneratedKeys**|是否启动自增主键|默认false|
+**keyProperty**|唯一标记一个属性|默认unset,不能和keyColumn联用|
+**keyColumn**|通过生成的键值设置表中的列名|不能和keyProperty联用|
+databaseId|厂商标识||
+
+## update 元素和 delete 元素
+同insert类型
+
+## sql元素
+```
+<include refid="roloCols"/>
+```
+
+## resultMap元素
+
+元素名|说明|备注|
+---|---|---|
+property|pojo字段|可以student.name|
+column|列||
+javaType|配置java类型|类型限定名或别名|
+jdbcType|配置数据库类型|支持常用|
+typeHandler|类型处理器|允许自定义覆盖自带|
+
+
+基本结构
+```
+<resultMap>
+    〈constructor >
+        <idArg/>
+        <arg/>
+    </constructor>
+    <id/>
+    <result/>
+    <association/>
+    <collection/>
+    <discriminator>
+        <case/>
+    </discriminator>
+</resultMap>
+```
+
+POJO不存在无参构造(仅有两参数构建)
+```
+<resultMap>
+    〈constructor >
+        <idArg column="id" javaType="int"/>
+        <arg column="role_name" javaType="string"/>
+    </constructor>
+    .....
+</resultMap>
+```
+
+## 5.8 级联
+待看
+
+
+## 6、动态SQL
+
+元素|作用|备注|
+---|---|---|
+if|判断语句|但条件分支判断|
+choose（when，otherwise）|判断语句|多条件判断|
+trim（where，set）|辅助语句|处理SQL拼装|
+foreach|循环语句|处理集合|
+
+#### if元素
+###### 参数不为空,对 roleName 的模糊查询
+```
+<select id="findRoles" parameterType="string"  resultMap="roleResultMap">
+    select role_no,role_name,note from t_role where 1=1
+    <if test="roleName !=null and roleName != ''">
+        and role_name like contact('%',#{roleName},'%')
+    </if>
+</select>
+```
+
+#### chosse、when、otherwise元素
+- 如果角色编号 CroleNo ）不为空，则只用角色编号作为条件查询。
+- 当角色编号为空，而角色名称不为空 ，则用角色名称作为条件进行模糊查询。
+- 当角色编号和角色名称都为空 ，则要求角色备注不为空
+```
+<select id="findRoles" parameterType="string"  resultMap="roleResultMap">
+    select role_no,role_name,note from t_role where 1=1
+    <chosse>
+        <when test="roleNo !=null and roleNo != ''">
+              and role_no = #{roleNo}
+        </when>
+        <when test="roleName !=null and roleName != ''">
+            and role_name like contact('%',#{roleName},'%')
+        </when>
+        <otherwise>
+            and note is not null
+        </otherwise>
+    </chosse>
+</select>
+```
+
+#### trim、where、set元素
+###### where
+```
+<select id="findRoles" parameterType="string"  resultMap="roleResultMap">
+    select role_no,role_name,note from t_role
+    <where>
+        <if test="roleName !=null and roleName != ''">
+            and role_name like contact('%',#{roleName},'%')
+        </if>
+        <if>
+            and note like contact('%',#{note},'%')
+        </if>
+    </where> 
+</select>
+```
+
+###### trim
+```
+<select id="findRoles" parameterType="string"  resultMap="roleResultMap">
+    select role_no,role_name,note from t_role
+    <trim prefix="and" prefixOverrides="and">
+        <if test="roleName !=null and roleName != ''">
+            and role_name like contact('%',#{roleName},'%')
+        </if>
+    </trim> 
+</select>
+```
+
+```$xslt
+<trim prefix="set" suffixOverrides=",">
+    ......
+</trim>
+```
+
+###### set
+```
+<update id="updateRole" parameterType="role"  >
+    update t_role
+    <set >
+        <if test="roleName !=null and roleName != ''">
+             role_name like contact('%',#{roleName},'%'),
+        </if>
+        <if test="role !=null and role != ''">
+             role =#{role}
+        </if>
+    </set>
+    where role_no=#{roleNo} 
+</update>
+```
+
+#### foreach元素
+```$xslt
+<select id="findUserSex" parameterType="user">
+    select * from t_role where role_no in
+    <foreach item="roleNo" index="index" collection="roleNoList" 
+        open="(" seperator="," close=")">
+        #{roleNo}
+    </foreach>
+</select >
+```
+
+#### bind元素
+```$xslt
+<select id="getBindList" parameterType="role" resultMap="roleResultMap">
+    <bind name="pattern_name" value="'%'+roleName+'%'" />
+    <bind name="pattern_no" value="'%'+roleNo+'%'" />
+    select id ,role_no,role_name from t_role
+    where roleName like #{pattern_name}
+    and roleNo like #{pattern_no}
+</select
 ```

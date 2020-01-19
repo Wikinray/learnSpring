@@ -19,8 +19,40 @@
         where id=#{id}
     </select>
 
+    <select id="getBossUser2" resultMap="BaseResultMap" parameterType="map">
+        select id,userName,user_type,password   from boss_user
+        where id=#{id} and user_type=#{userType}
+    </select>
+
+    <select id="getBossUser3" resultMap="BaseResultMap" >
+        select id,userName,user_type,password   from boss_user
+        where id=#{id} and user_type=#{userType}
+    </select>
+
+    <select id="getBossUser4" resultMap="BaseResultMap" parameterType="bossUser">
+        select id,userName,user_type,password   from boss_user
+        where id=#{id} and user_type=#{userType,typeHandler=com.example.mybatis.utils.typehandler.UserEnumTypeHandler}
+    </select>
+
+    <select id="getBossUser5" resultMap="BaseResultMap" >
+        select id,userName,user_type,password   from boss_user
+        where  user_type=#{bossUser.userType,typeHandler=com.example.mybatis.utils.typehandler.UserEnumTypeHandler}
+        limit #{page.start},#{page.limit}
+    </select>
+
+    <select id="countBossUser" resultType="int" parameterType="string">
+        select count(id)    from boss_user
+        where user_type=#{userType}
+    </select>
+
     <insert id="insertBossUser" parameterType="bossUser" >
-        insert boss_user (id,userName,user_type,password) values (#{id},#{username},#{userType,typeHandler=com.example.mybatis.utils.UserEnumTypeHandler},#{password,typeHandler=com.example.mybatis.utils.MytypeHandler})
+        insert into boss_user (id,userName,user_type,password)
+        values (#{id},#{username},#{userType,typeHandler=com.example.mybatis.utils.typehandler.UserEnumTypeHandler},#{password,typeHandler=com.example.mybatis.utils.typehandler.MytypeHandler})
+     </insert>
+
+    <insert id="insertBossUser2" parameterType="bossUser" useGeneratedKeys="true" keyProperty="id">
+        insert into boss_user (userName,user_type,password)
+        values (#{username},#{userType,typeHandler=com.example.mybatis.utils.typehandler.UserEnumTypeHandler},#{password,typeHandler=com.example.mybatis.utils.typehandler.MytypeHandler})
      </insert>
 
      <delete id="deleteBossUser" parameterType="string" >
@@ -33,6 +65,10 @@
      </update>
 
      <select id="listBossUser" resultMap="BaseResultMap" parameterType="string">
-         select id,userName,user_type as  from boss_userwhere where user_type=#{userType}
+         select id,userName,user_type   from boss_user  where user_type=#{userType}
+     </select>
+
+    <select id="listBossUser2" resultMap="BaseResultMap" >
+         select id,userName,user_type   from boss_user  where user_type=#{userType}
      </select>
  </mapper>

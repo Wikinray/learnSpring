@@ -2,6 +2,7 @@ package com.example.mybatis.model;
 
 import com.example.mybatis.model.enums.CityEnum;
 import com.example.mybatis.model.enums.UserTypeEnum;
+import lombok.Builder;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
